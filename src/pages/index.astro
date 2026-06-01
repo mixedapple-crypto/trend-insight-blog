@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { href } from '../lib/base';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const titleOf = (p: (typeof posts)[number]) =>
+  p.data.title ?? `${p.data.topic} — ${fmt(p.data.date)}`;
+---
+
+<Base title="trend-insight">
+  {posts.length === 0 && <p class="meta">No posts yet.</p>}
+  <ul class="posts">
+    {
+      posts.map((p) => (
+        <li>
+          <a href={href(`posts/${p.id}/`)}>{titleOf(p)}</a>
+          <div class="meta">{fmt(p.data.date)}</div>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

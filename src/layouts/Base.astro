@@ -1,0 +1,36 @@
+---
+import { base } from '../lib/base';
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        max-width: 46rem; margin: 2rem auto; padding: 0 1rem;
+        font: 16px/1.65 system-ui, -apple-system, sans-serif;
+      }
+      a { color: inherit; }
+      header h1 { font-size: 1.1rem; margin: 0 0 2rem; }
+      header h1 a { text-decoration: none; }
+      .meta { color: #888; font-size: 0.9rem; }
+      ul.posts { list-style: none; padding: 0; }
+      ul.posts li { margin: 0.9rem 0; }
+      article :global(h2) { margin-top: 2rem; }
+    </style>
+  </head>
+  <body>
+    <header><h1><a href={base}>trend-insight</a></h1></header>
+    <main><slot /></main>
+  </body>
+</html>

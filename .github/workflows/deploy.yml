@@ -1,0 +1,36 @@
+name: deploy
+
+# Build the Astro site and deploy to GitHub Pages on every push to main.
+# publish.yml (in the private pipeline repo) publishes by pushing a new post here,
+# which triggers this self-contained deploy — no cross-repo build needed.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: withastro/action@v3   # installs deps, builds, uploads the Pages artifact
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
