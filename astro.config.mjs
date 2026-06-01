@@ -4,6 +4,6 @@ import { defineConfig } from 'astro/config';
 // - Update `site` to your GitHub username.
 // - For a user/org page (<user>.github.io repo) or a custom domain, set base: '/'.
 export default defineConfig({
-  site: 'https://mixedapple.github.io',
+  site: 'https://mixedapple-crypto.github.io',
   base: '/trend-insight-blog',
 });
